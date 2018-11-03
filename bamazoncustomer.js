@@ -11,7 +11,6 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("connected as id " + connection.threadId);
   start();
 });
 
@@ -23,7 +22,7 @@ function start () {
     .prompt([
       {
         name: "start",
-        type: "rawlist",
+        type: "list",
         message: "What would you like to do?",
         choices: ["Buy", "Quit"]
       }]).then(function(choice){
@@ -71,14 +70,28 @@ function start () {
 
 function buy (results, data){
 
-console.log(data.buy.split(".")[0]);
-let currentID = parseInt(data.buy.split(".")[0]) - 1
-console.log("Stock: " + results[currentID].stock_quantity);
-console.log("Stock hard: " + results[5 - 1].stock_quantity);
-if(data.quantity <= results[currentID].stock_quantity){
-console.log("Buy");
+let IDplaceArray = parseInt(data.buy.split(".")[0]) - 1
+if(data.quantity <= results[IDplaceArray].stock_quantity){
+let quantity = results[IDplaceArray].stock_quantity - data.quantity
+var query = connection.query(
+  "UPDATE products SET ? WHERE ?",
+  [
+    {
+      stock_quantity: quantity
+    },
+    {
+      id: data.buy.split(".")[0]
+    }
+  ],
+  function(err, res) {
+    console.log(results[IDplaceArray].product_name + " was succesfully purchased");
+    // Call deleteProduct AFTER the UPDATE completes
+    start();
+  }
+  )
 
 } else {
-  console.log("Insufficient quantity!")
+  console.log("Insufficient quantity!");
+  start();
 }
 }
