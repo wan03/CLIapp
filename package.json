@@ -1,0 +1,24 @@
+{
+  "name": "cliapp",
+  "version": "1.0.0",
+  "description": "Store front model with node and mySQL",
+  "main": "bamazoncustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wan03/CLIapp.git"
+  },
+  "author": "Jonatan Martinez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wan03/CLIapp/issues"
+  },
+  "homepage": "https://github.com/wan03/CLIapp#readme",
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "mysql": "^2.16.0",
+    "table": "^5.1.0"
+  }
+}
